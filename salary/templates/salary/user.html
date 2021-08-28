@@ -153,16 +153,51 @@
             <div class="col-md-6 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Horizontal Form</h4>
+                        <div class="row">
+                            <div class="col-11">
+                                <h4 class="card-title">Horizontal Form</h4>
+                            </div>
+                            <div class="col-1">
+                                <svg style="cursor: pointer; height: 20px" onclick="close_form()" aria-hidden="true" focusable="false" data-prefix="far" data-icon="times-circle" class="svg-inline--fa fa-times-circle fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                    <path fill="currentColor"
+                                        d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm101.8-262.2L295.6 256l62.2 62.2c4.7 4.7 4.7 12.3 0 17l-22.6 22.6c-4.7 4.7-12.3 4.7-17 0L256 295.6l-62.2 62.2c-4.7 4.7-12.3 4.7-17 0l-22.6-22.6c-4.7-4.7-4.7-12.3 0-17l62.2-62.2-62.2-62.2c-4.7-4.7-4.7-12.3 0-17l22.6-22.6c4.7-4.7 12.3-4.7 17 0l62.2 62.2 62.2-62.2c4.7-4.7 12.3-4.7 17 0l22.6 22.6c4.7 4.7 4.7 12.3 0 17z">
+                                    </path>
+                                </svg>
+                            </div>
+                        </div>
                         <p class="card-description"> Horizontal form layout </p>
                         <form class="forms-sample">
                             <div class="form-group row">
-                                <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Email</label>
+                                <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Name:</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="exampleInputUsername2" placeholder="Username">
+                                    <input type="text" name="name" id="name" class="form-control" id="exampleInputUsername2" placeholder="Username">
                                 </div>
                             </div>
                             <div class="form-group row">
+                                <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Role:</label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="role" id="role" class="form-control" id="exampleInputUsername2" placeholder="Role">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Salary:</label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="salary" id="salary" class="form-control" id="exampleInputUsername2" placeholder="Salary">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Address:</label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="address" id="address" class="form-control" id="exampleInputUsername2" placeholder="Address">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Mobile no.:</label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="number" id="number" class="form-control" id="exampleInputUsername2" placeholder="Mobile no.">
+                                </div>
+                            </div>
+                            <!-- <div class="form-group row">
                                 <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Email</label>
                                 <div class="col-sm-9">
                                     <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Email">
@@ -190,7 +225,7 @@
                             <div class="form-check form-check-flat form-check-primary">
                                 <label class="form-check-label">
                                     <input type="checkbox" class="form-check-input"> Remember me </label>
-                            </div>
+                            </div> -->
                             <button type="submit" class="btn btn-primary mr-2">Submit</button>
                             <button class="btn btn-dark">Cancel</button>
                         </form>
@@ -202,8 +237,14 @@
 </div>
 <script>
     function open_form() {
-        // document.getElementById('#form').style.display = 'block'
-        // document.getElementById('#users').style.display = 'none'
+        document.getElementById('form').style.display = 'block'
+        document.getElementById('users').style.display = 'none'
+        console.log("hi")
+    }
+
+    function close_form() {
+        document.getElementById('users').style.display = 'block'
+        document.getElementById('form').style.display = 'none'
         console.log("hi")
     }
 </script>
