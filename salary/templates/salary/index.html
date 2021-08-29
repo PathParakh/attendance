@@ -5,134 +5,47 @@
             <div class="col-12 grid-margin">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Order Status</h4>
+                        <h4 class="card-title">Attendance for {{ date }}</h4>
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>
-                                            <div class="form-check form-check-muted m-0">
-                                                <label class="form-check-label">
-                                                    <input type="checkbox" class="form-check-input">
-                                                </label>
-                                            </div>
-                                        </th>
-                                        <th> Client Name </th>
-                                        <th> Order No </th>
-                                        <th> Product Cost </th>
-                                        <th> Project </th>
-                                        <th> Payment Mode </th>
-                                        <th> Start Date </th>
-                                        <th> Payment Status </th>
+                                        <th style="color: white;"> Id </th>
+                                        <th style="color: white;"> Staff Name </th>
+                                        <th style="color: white;"> Attendance </th>
+                                        <th style="color: white;"> Role </th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check form-check-muted m-0">
-                                                <label class="form-check-label">
-                                                    <input type="checkbox" class="form-check-input">
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <img src="{% static 'salary/assets/images/faces/face1.jpg' %}" alt="image" />
-                                            <span class="pl-2">Henry Klein</span>
-                                        </td>
-                                        <td> 02312 </td>
-                                        <td> $14,500 </td>
-                                        <td> Dashboard </td>
-                                        <td> Credit card </td>
-                                        <td> 04 Dec 2019 </td>
-                                        <td>
-                                            <div class="badge badge-outline-success">Approved</div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check form-check-muted m-0">
-                                                <label class="form-check-label">
-                                                    <input type="checkbox" class="form-check-input">
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <img src="{% static 'salary/assets/images/faces/face2.jpg' %}" alt="image" />
-                                            <span class="pl-2">Estella Bryan</span>
-                                        </td>
-                                        <td> 02312 </td>
-                                        <td> $14,500 </td>
-                                        <td> Website </td>
-                                        <td> Cash on delivered </td>
-                                        <td> 04 Dec 2019 </td>
-                                        <td>
-                                            <div class="badge badge-outline-warning">Pending</div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check form-check-muted m-0">
-                                                <label class="form-check-label">
-                                                    <input type="checkbox" class="form-check-input">
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <img src="{% static 'salary/assets/images/faces/face5.jpg' %}" alt="image" />
-                                            <span class="pl-2">Lucy Abbott</span>
-                                        </td>
-                                        <td> 02312 </td>
-                                        <td> $14,500 </td>
-                                        <td> App design </td>
-                                        <td> Credit card </td>
-                                        <td> 04 Dec 2019 </td>
-                                        <td>
-                                            <div class="badge badge-outline-danger">Rejected</div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check form-check-muted m-0">
-                                                <label class="form-check-label">
-                                                    <input type="checkbox" class="form-check-input">
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <img src="{% static 'salary/assets/images/faces/face3.jpg' %}" alt="image" />
-                                            <span class="pl-2">Peter Gill</span>
-                                        </td>
-                                        <td> 02312 </td>
-                                        <td> $14,500 </td>
-                                        <td> Development </td>
-                                        <td> Online Payment </td>
-                                        <td> 04 Dec 2019 </td>
-                                        <td>
-                                            <div class="badge badge-outline-success">Approved</div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check form-check-muted m-0">
-                                                <label class="form-check-label">
-                                                    <input type="checkbox" class="form-check-input">
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <img src="{% static 'salary/assets/images/faces/face4.jpg' %}" alt="image" />
-                                            <span class="pl-2">Sallie Reyes</span>
-                                        </td>
-                                        <td> 02312 </td>
-                                        <td> $14,500 </td>
-                                        <td> Website </td>
-                                        <td> Credit card </td>
-                                        <td> 04 Dec 2019 </td>
-                                        <td>
-                                            <div class="badge badge-outline-success">Approved</div>
-                                        </td>
-                                    </tr>
-                                </tbody>
+                                    <tbody>
+                                        <form action="/index" method="POST">
+                                            {% csrf_token %}
+                                            {% for staffs in staff %}
+                                                <input type="hidden" name="staff_id{{staffs.id}}" value="{{staffs.id}}">
+                                                <input type="hidden" name="attendance{{staffs.id}}" id='input_attendance{{staffs.id}}'>
+                                                <tr>
+                                                    <td> {{staffs.id}} </td>
+                                                    <td> {{staffs.name}} </td>
+                                                    <td>
+                                                        <div class="btn-group">
+                                                            <button type="button" class="btn btn-outline-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id='present{{staffs.id}}'>
+                                                                Present
+                                                            </button>
+                                                            <div class="dropdown-menu">
+                                                                <a class="dropdown-item" onclick="attendance_present({{staffs.id}})">Present</a>
+                                                                <a class="dropdown-item" onclick="attendance_absent({{staffs.id}})">Absent</a>
+                                                                <a class="dropdown-item" onclick="attendance_half_day({{staffs.id}})">Half-day</a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td> {{staffs.role}} </td>
+                                                </tr>
+                                                
+                                            {% endfor %}
+                                            <tr>
+                                                <button type="submit" style="float:right" class="btn btn-info">Save</button>
+                                            </tr>
+                                        </form>
+                                    </tbody>
                             </table>
                         </div>
                     </div>
@@ -211,4 +124,38 @@
         </div>
     </div>
 </div>
+<script>
+        function attendance_present(id) {
+            let per = '#present' + id
+            document.querySelector(per).textContent = "Present"
+            document.querySelector(per).classList.remove("btn-outline-danger")
+            document.querySelector(per).classList.remove("btn-outline-warning")
+            document.querySelector(per).classList.add("btn-outline-primary")
+
+            let input_attendance = 'input_attendance' + id
+            document.queryselector(input_attendance).value = "present"
+        }
+
+        function attendance_absent(id) {
+            let per = '#present' + id
+            document.querySelector(per).textContent = "Absent"
+            document.querySelector(per).classList.remove("btn-outline-primary")
+            document.querySelector(per).classList.remove("btn-outline-warning")
+            document.querySelector(per).classList.add("btn-outline-danger")
+
+            let input_attendance = 'input_attendance' + id
+            document.queryselector(input_attendance).value = "absent"
+        }
+
+        function attendance_half_day(id) {
+            let per = '#present' + id
+            document.querySelector(per).textContent = "Half-day"
+            document.querySelector(per).classList.remove("btn-outline-primary")
+            document.querySelector(per).classList.remove("btn-outline-danger")
+            document.querySelector(per).classList.add("btn-outline-warning")
+
+            let input_attendance = 'input_attendance' + id
+            document.queryselector(input_attendance).value = "half-day"
+        }
+</script>
 {% endblock %}
