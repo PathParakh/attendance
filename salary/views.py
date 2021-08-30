@@ -9,39 +9,21 @@ import datetime
 
 
 def index(request):
-    if request.method == "POST" :
-        # for staffs in staff :
-        #     stf_if = 'staff_id' + {{staffs.id}}
-        #     staff_id = request.POST[stf_if]
-
-        #     at_if = 'attendance' + {{staffs.id}}
-        #     attendances = request.POST[at_if]
-
-        #     date = datetime.date.today()
-
-        #     ins = attendance(staff_id=staff_id, attendance=attendances, date=date)
-        #     ins.save()
-        staff_id = request.POST.get('staff_id1', None)
-        attendances = request.POST.get('attendance1', None)
-
-        date = datetime.date.today()
-
-        ins = attendance(staff_id=staff_id, attendance=attendances, date=date)
-        ins.save()
-
-    # staff_id = request.POST['staff_id2']
-    # attendances = request.POST['attendance2']
-
-    # date = datetime.date.today()
-
-    # ins = attendance(staff_id=staff_id, attendance=attendances, date=date)
-    # ins.save()
 
     staffs = staff.objects.all()
     attendances = attendance.objects.all()
     amounts = amount.objects.all()
     count_id = staff.objects.latest('id')
     date = datetime.date.today()
+    if request.method == "POST" :
+        for i in range(1,count_id) :
+            staff_id = request.POST.get('staff_id' + i, None)
+            attendances = request.POST.get('attendance' + i, None)
+
+            date = datetime.date.today()
+
+            ins = attendance(staff_id=staff_id, attendance=attendances, date=date)
+            ins.save()
     return render(request, "salary/index.html", {'staff': staffs, 'attendance': attendances, 'amount': amounts, 'count_id': count_id, 'date': date})
 
 

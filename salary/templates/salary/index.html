@@ -133,7 +133,7 @@
             document.querySelector(per).classList.add("btn-outline-primary")
 
             let input_attendance = 'input_attendance' + id
-            document.queryselector(input_attendance).value = "present"
+            document.getElementById(input_attendance).value = "present"
         }
 
         function attendance_absent(id) {
@@ -144,7 +144,7 @@
             document.querySelector(per).classList.add("btn-outline-danger")
 
             let input_attendance = 'input_attendance' + id
-            document.queryselector(input_attendance).value = "absent"
+            document.getElementById(input_attendance).value = "absent"
         }
 
         function attendance_half_day(id) {
@@ -155,7 +155,7 @@
             document.querySelector(per).classList.add("btn-outline-warning")
 
             let input_attendance = 'input_attendance' + id
-            document.queryselector(input_attendance).value = "half-day"
+            document.getElementById(input_attendance).value = "half-day"
         }
 </script>
 {% endblock %}
