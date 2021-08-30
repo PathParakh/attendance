@@ -14,6 +14,10 @@
                                         <th style="color: white;"> Staff Name </th>
                                         <th style="color: white;"> Attendance </th>
                                         <th style="color: white;"> Role </th>
+
+                                        {% for attendances in attendance %}
+                                            <th>{{attedances.id}}</th>
+                                        {% endfor %}
                                     </tr>
                                 </thead>
                                     <tbody>

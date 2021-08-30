@@ -1,4 +1,5 @@
 from django.db.models.fields import DateTimeField
+from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -11,19 +12,29 @@ import datetime
 def index(request):
 
     staffs = staff.objects.all()
+
+    a = staff.objects. values_list('id', flat=True)
+
     attendances = attendance.objects.all()
     amounts = amount.objects.all()
     count_id = staff.objects.latest('id')
     date = datetime.date.today()
     if request.method == "POST" :
-        for i in range(1,count_id) :
-            staff_id = request.POST.get('staff_id' + i, None)
-            attendances = request.POST.get('attendance' + i, None)
+        for i in a :
+            print(i)
+            stf = 'staff_id' + str(i)
+            print(stf)
+            atd = 'attendance' + str(i)
+            print(atd)
+            staff_id = request.POST.get(stf, None)
+            attendances = request.POST.get(atd, None)
 
             date = datetime.date.today()
 
             ins = attendance(staff_id=staff_id, attendance=attendances, date=date)
             ins.save()
+        return HttpResponseRedirect("/index")
+
     return render(request, "salary/index.html", {'staff': staffs, 'attendance': attendances, 'amount': amounts, 'count_id': count_id, 'date': date})
 
 
