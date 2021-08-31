@@ -14,10 +14,6 @@
                                         <th style="color: white;"> Staff Name </th>
                                         <th style="color: white;"> Attendance </th>
                                         <th style="color: white;"> Role </th>
-
-                                        {% for attendances in attendance %}
-                                            <th>{{attedances.id}}</th>
-                                        {% endfor %}
                                     </tr>
                                 </thead>
                                     <tbody>
@@ -31,9 +27,30 @@
                                                     <td> {{staffs.name}} </td>
                                                     <td>
                                                         <div class="btn-group">
-                                                            <button type="button" class="btn btn-outline-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id='present{{staffs.id}}'>
-                                                                Present
-                                                            </button>
+                                                            {% try %}
+                                                                {% for attendances in attendance %}
+                                                                    {% if attendances.staff_id|add:0 == staffs.id|add:0 %}
+                                                                        {% if attendances.attendance == 'present'%}
+                                                                            {% if attendances.date == date %}
+                                                                            {% comment %} <th>{{  }} </th>
+                                                                            <th>{{ date }} </th> {% endcomment %}
+                                                                                <button type="button" class="btn btn-outline-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id='present{{staffs.id}}'>
+                                                                                    Present
+                                                                                </button>
+                                                                            {% endif %}
+                                                                        {% elif attendances.attendance == 'absent'%}
+                                                                            <button type="button" class="btn btn-outline-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id='present{{staffs.id}}'>
+                                                                                Absent
+                                                                            </button>
+                                                                        {% elif attendances.attendance == 'half-day'%}
+                                                                            <button type="button" class="btn btn-outline-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id='present{{staffs.id}}'>
+                                                                                Half-day
+                                                                            </button>
+                                                                        {% endif %}
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                            {% except %}
+                                                                <h1>hi1</h1>
                                                             <div class="dropdown-menu">
                                                                 <a class="dropdown-item" onclick="attendance_present({{staffs.id}})">Present</a>
                                                                 <a class="dropdown-item" onclick="attendance_absent({{staffs.id}})">Absent</a>
@@ -56,76 +73,6 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">Visitors by Countries</h4>
-                        <div class="row">
-                            <div class="col-md-5">
-                                <div class="table-responsive">
-                                    <table class="table">
-                                        <tbody>
-                                            <tr>
-                                                <td>
-                                                    <i class="flag-icon flag-icon-us"></i>
-                                                </td>
-                                                <td>USA</td>
-                                                <td class="text-right"> 1500 </td>
-                                                <td class="text-right font-weight-medium"> 56.35% </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <i class="flag-icon flag-icon-de"></i>
-                                                </td>
-                                                <td>Germany</td>
-                                                <td class="text-right"> 800 </td>
-                                                <td class="text-right font-weight-medium"> 33.25% </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <i class="flag-icon flag-icon-au"></i>
-                                                </td>
-                                                <td>Australia</td>
-                                                <td class="text-right"> 760 </td>
-                                                <td class="text-right font-weight-medium"> 15.45% </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <i class="flag-icon flag-icon-gb"></i>
-                                                </td>
-                                                <td>United Kingdom</td>
-                                                <td class="text-right"> 450 </td>
-                                                <td class="text-right font-weight-medium"> 25.00% </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <i class="flag-icon flag-icon-ro"></i>
-                                                </td>
-                                                <td>Romania</td>
-                                                <td class="text-right"> 620 </td>
-                                                <td class="text-right font-weight-medium"> 10.25% </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <i class="flag-icon flag-icon-br"></i>
-                                                </td>
-                                                <td>Brasil</td>
-                                                <td class="text-right"> 230 </td>
-                                                <td class="text-right font-weight-medium"> 75.00% </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="col-md-7">
-                                <div id="audience-map" class="vector-map"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 <script>
@@ -134,7 +81,7 @@
             document.querySelector(per).textContent = "Present"
             document.querySelector(per).classList.remove("btn-outline-danger")
             document.querySelector(per).classList.remove("btn-outline-warning")
-            document.querySelector(per).classList.add("btn-outline-primary")
+            document.querySelector(per).classList.add("btn-outline-success")
 
             let input_attendance = 'input_attendance' + id
             document.getElementById(input_attendance).value = "present"
@@ -143,7 +90,7 @@
         function attendance_absent(id) {
             let per = '#present' + id
             document.querySelector(per).textContent = "Absent"
-            document.querySelector(per).classList.remove("btn-outline-primary")
+            document.querySelector(per).classList.remove("btn-outline-success")
             document.querySelector(per).classList.remove("btn-outline-warning")
             document.querySelector(per).classList.add("btn-outline-danger")
 
@@ -154,7 +101,7 @@
         function attendance_half_day(id) {
             let per = '#present' + id
             document.querySelector(per).textContent = "Half-day"
-            document.querySelector(per).classList.remove("btn-outline-primary")
+            document.querySelector(per).classList.remove("btn-outline-success")
             document.querySelector(per).classList.remove("btn-outline-danger")
             document.querySelector(per).classList.add("btn-outline-warning")
 

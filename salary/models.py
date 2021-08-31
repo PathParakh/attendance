@@ -10,7 +10,7 @@ class staff(models.Model):
     address = models.CharField(max_length=250, null=True)
     number = models.CharField(max_length=250, null=True)
     date = models.DateField()
-
+    
 class attendance(models.Model):
     id = models.AutoField
     staff_id = models.CharField(max_length=250, null=True)

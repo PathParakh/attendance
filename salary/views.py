@@ -17,7 +17,7 @@ def index(request):
 
     attendances = attendance.objects.all()
     amounts = amount.objects.all()
-    count_id = staff.objects.latest('id')
+    # count_id = staff.objects.latest('id')
     date = datetime.date.today()
     if request.method == "POST" :
         for i in a :
@@ -34,8 +34,8 @@ def index(request):
             ins = attendance(staff_id=staff_id, attendance=attendances, date=date)
             ins.save()
         return HttpResponseRedirect("/index")
-
-    return render(request, "salary/index.html", {'staff': staffs, 'attendance': attendances, 'amount': amounts, 'count_id': count_id, 'date': date})
+    date = datetime.date.today()
+    return render(request, "salary/index.html", {'staff': staffs, 'attendance': attendances, 'amount': amounts, 'date': date})
 
 
 def user(request):
