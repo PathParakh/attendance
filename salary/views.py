@@ -16,15 +16,9 @@ def index(request):
 
     attendances = attendance.objects.all()
     amounts = amount.objects.all()
-    # count_id = staff.objects.latest('id')
     date = datetime.date.today()
-
-    # z = []
-    # for attendances in attendance.objects.values('date') :
-    #     z.append(attendances)
-    #     print([item for item, count in collections.Counter(z).items() if count > 1])
-    # print([item for item, count in collections.Counter(z).items() if count > 1])
     unique_dates = list({a.date for a in attendances})
+    unique_dates.sort()
     if request.method == "POST" :
         for i in a :
             print(i)
@@ -55,6 +49,9 @@ def index(request):
 
 
 def user(request):
+    attendances = attendance.objects.all()
+    unique_dates = list({a.date for a in attendances})
+    unique_dates.sort()
     if request.method == "POST" :
         name = request.POST['name']
         role = request.POST['role']
@@ -65,6 +62,13 @@ def user(request):
 
         ins = staff(name=name, role=role, salary=salary, address=address, date=date, number=number)
         ins.save()
+        for unique_date in unique_dates :
+            staff_id = ins.id
+            attendances = 'not_entered'
+            date = unique_date
+            insa = attendance(staff_id=staff_id, attendance=attendances, date=date)
+            insa.save()
+
     staffs = staff.objects.all()
     return render(request, "salary/user.html", {'staff': staffs})
 

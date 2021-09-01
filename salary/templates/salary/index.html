@@ -185,9 +185,6 @@
         </div>
         {% endif %}
 
-        {% for unique_date in unique_dates%}
-        {{unique_date}}
-        {% endfor %}
         <div class="row ">
             <div class="col-12 grid-margin">
                 <div class="card">
@@ -200,25 +197,41 @@
                                         <th style="color: white;"> Id </th>
                                         <th style="color: white;"> Name </th>
                                         {% for unique_date in unique_dates%}
-                                            <th style="color: white;">{{unique_date}}</th>
+                                        <th style="color: white;">{{unique_date}}</th>
                                         {% endfor %}
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {% for staffs in staff %}
-                                        <tr>
-                                            <td> {{staffs.id}} </td>
-                                            <td> {{staffs.name}} </td>
-                                            {% for unique_date in unique_dates%}
-                                                {% for attendances in attendance%}
-                                                    {% if attendances.date == unique_date %}
-                                                        {% if attendances.staff_id == staffs.id %}
-                                                            <td>{{ attendances.attendance }}</td>
-                                                        {% endif %}
-                                                    {% endif %}
-                                                {% endfor %}
-                                            {% endfor %}
-                                        </tr>
+                                    <tr>
+                                        <td> {{staffs.id}} </td>
+                                        <td> {{staffs.name}} </td>
+                                        {% for unique_date in unique_dates%}
+                                        {% for attendances in attendance%}
+                                        {% if attendances.date == unique_date %}
+                                        {% if attendances.staff_id|add:0 == staffs.id|add:0 %}
+                                        {% if attendances.attendance == 'half-day'%}
+                                        <td>
+                                            <div class="badge badge-outline-warning">Half-day</div>
+                                        </td>
+                                        {% elif attendances.attendance == 'present'%}
+                                        <td>
+                                            <div class="badge badge-outline-success">Present</div>
+                                        </td>
+                                        {% elif attendances.attendance == 'absent'%}
+                                        <td>
+                                            <div class="badge badge-outline-danger">Absent</div>
+                                        </td>
+                                        {% elif attendances.attendance == 'not_entered'%}
+                                        <td>
+                                            <div class="badge badge-outline-primary">Not Entered</div>
+                                        </td>
+                                        {% endif %}
+                                        {% endif %}
+                                        {% endif %}
+                                        {% endfor %}
+                                        {% endfor %}
+                                    </tr>
                                     {% endfor %}
                                 </tbody>
                             </table>
@@ -227,6 +240,33 @@
                 </div>
             </div>
         </div>
+        {% comment %} <div class="row">
+            {% for staffs in staff %}
+                <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="d-flex align-items-center align-self-start" style='float:right'>
+                                        <svg width="16" height="16" fill="currentColor" class="bi bi-pencil-square text-success" viewBox="0 0 16 16">
+                                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                        </svg>
+                                    </div>
+                                    <div class="d-flex align-items-center align-self-start">
+                                        <h3 class="mb-0 " style="font-size: 1.3rem">{{staffs.name}}</h3>
+                                    </div>
+                                    <div class="d-flex align-items-center align-self-start">
+                                        <p class="text-success mb-0 font-weight-medium" style='float: right'>{{staffs.number}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <h6 class=" font-weight-normal text-info">{{staffs.role}}</h6>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div> {% endcomment %}
     </div>
 </div>
 <script>
