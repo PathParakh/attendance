@@ -19,6 +19,8 @@ def index(request):
     date = datetime.date.today()
     unique_dates = list({a.date for a in attendances})
     unique_dates.sort()
+    unique_dates_reverse = list({a.date for a in attendances})
+    unique_dates_reverse.sort(reverse=True)
     if request.method == "POST" :
         for i in a :
             print(i)
@@ -45,7 +47,7 @@ def index(request):
                 y_n = False
                 print(y_n)
     
-    return render(request, "salary/index.html", {'staff': staffs, 'attendance': attendances, 'amount': amounts, 'date': date, 'unique_dates': unique_dates, 'y_n': y_n})
+    return render(request, "salary/index.html", {'staff': staffs, 'attendance': attendances, 'amount': amounts, 'date': date, 'unique_dates': unique_dates, 'y_n': y_n, 'unique_dates_reverse': unique_dates_reverse})
 
 
 def user(request):

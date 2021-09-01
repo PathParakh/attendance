@@ -196,8 +196,8 @@
                                     <tr>
                                         <th style="color: white;"> Id </th>
                                         <th style="color: white;"> Name </th>
-                                        {% for unique_date in unique_dates%}
-                                        <th style="color: white;">{{unique_date}}</th>
+                                        {% for unique_date_reverse in unique_dates_reverse %}
+                                        <th style="color: white;">{{unique_date_reverse}}</th>
                                         {% endfor %}
                                     </tr>
                                 </thead>
@@ -206,9 +206,9 @@
                                     <tr>
                                         <td> {{staffs.id}} </td>
                                         <td> {{staffs.name}} </td>
-                                        {% for unique_date in unique_dates%}
+                                        {% for unique_date_reverse in unique_dates_reverse%}
                                         {% for attendances in attendance%}
-                                        {% if attendances.date == unique_date %}
+                                        {% if attendances.date == unique_date_reverse %}
                                         {% if attendances.staff_id|add:0 == staffs.id|add:0 %}
                                         {% if attendances.attendance == 'half-day'%}
                                         <td>
