@@ -7,10 +7,9 @@ from .models import staff
 from .models import attendance
 from .models import amount
 import datetime
-
+import collections
 
 def index(request):
-
     staffs = staff.objects.all()
 
     a = staff.objects. values_list('id', flat=True)
@@ -19,6 +18,13 @@ def index(request):
     amounts = amount.objects.all()
     # count_id = staff.objects.latest('id')
     date = datetime.date.today()
+
+    # z = []
+    # for attendances in attendance.objects.values('date') :
+    #     z.append(attendances)
+    #     print([item for item, count in collections.Counter(z).items() if count > 1])
+    # print([item for item, count in collections.Counter(z).items() if count > 1])
+    unique_dates = list({a.date for a in attendances})
     if request.method == "POST" :
         for i in a :
             print(i)
@@ -34,8 +40,18 @@ def index(request):
             ins = attendance(staff_id=staff_id, attendance=attendances, date=date)
             ins.save()
         return HttpResponseRedirect("/index")
+
     date = datetime.date.today()
-    return render(request, "salary/index.html", {'staff': staffs, 'attendance': attendances, 'amount': amounts, 'date': date})
+    y_n = False
+    for unique_date in unique_dates :
+            if unique_date == date :
+                y_n = True
+                print(y_n)
+            else :
+                y_n = False
+                print(y_n)
+    
+    return render(request, "salary/index.html", {'staff': staffs, 'attendance': attendances, 'amount': amounts, 'date': date, 'unique_dates': unique_dates, 'y_n': y_n})
 
 
 def user(request):
