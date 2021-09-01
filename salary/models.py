@@ -15,7 +15,7 @@ class attendance(models.Model):
     id = models.AutoField
     staff_id = models.CharField(max_length=250, null=True)
     attendance = models.CharField(max_length=250, null=True)
-    date = models.CharField(max_length=250)
+    date = models.DateField()
 
 class amount(models.Model):
     id = models.AutoField

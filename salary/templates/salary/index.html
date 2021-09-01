@@ -27,30 +27,45 @@
                                                     <td> {{staffs.name}} </td>
                                                     <td>
                                                         <div class="btn-group">
-                                                            {% try %}
-                                                                {% for attendances in attendance %}
-                                                                    {% if attendances.staff_id|add:0 == staffs.id|add:0 %}
-                                                                        {% if attendances.attendance == 'present'%}
-                                                                            {% if attendances.date == date %}
-                                                                            {% comment %} <th>{{  }} </th>
-                                                                            <th>{{ date }} </th> {% endcomment %}
-                                                                                <button type="button" class="btn btn-outline-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id='present{{staffs.id}}'>
-                                                                                    Present
-                                                                                </button>
-                                                                            {% endif %}
-                                                                        {% elif attendances.attendance == 'absent'%}
+                                                            {% for attendances in attendance %}
+                                                                {% if attendances.staff_id|add:0 == staffs.id|add:0 %}
+                                                                    {% if attendances.attendance == 'present'%}
+                                                                        {% if attendances.date == date %}
+                                                                            <button type="button" class="btn btn-outline-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id='present{{staffs.id}}'>
+                                                                                Present
+                                                                            </button>
+                                                                        {% else %}
+                                                                            <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id='present{{staffs.id}}'>
+                                                                                Not entered
+                                                                            </button>
+                                                                        {% endif %}
+                                                                    {% elif attendances.attendance == 'absent'%}
+                                                                        {% if attendances.date == date %}
                                                                             <button type="button" class="btn btn-outline-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id='present{{staffs.id}}'>
                                                                                 Absent
                                                                             </button>
-                                                                        {% elif attendances.attendance == 'half-day'%}
+                                                                        {% else %}
+                                                                            <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id='present{{staffs.id}}'>
+                                                                                Not entered
+                                                                            </button>
+                                                                        {% endif %}
+                                                                    {% elif attendances.attendance == 'half-day'%}
+                                                                        {% if attendances.date == date %}
                                                                             <button type="button" class="btn btn-outline-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id='present{{staffs.id}}'>
                                                                                 Half-day
                                                                             </button>
+                                                                        {% else %}
+                                                                            <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id='present{{staffs.id}}'>
+                                                                                Not entered
+                                                                            </button>
                                                                         {% endif %}
                                                                     {% endif %}
-                                                                {% endfor %}
-                                                            {% except %}
-                                                                <h1>hi1</h1>
+                                                                {% endif %}
+                                                            {% empty %}
+                                                                <button type="button" class="btn btn-outline-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id='present{{staffs.id}}'>
+                                                                    Present
+                                                                </button>
+                                                            {% endfor %}
                                                             <div class="dropdown-menu">
                                                                 <a class="dropdown-item" onclick="attendance_present({{staffs.id}})">Present</a>
                                                                 <a class="dropdown-item" onclick="attendance_absent({{staffs.id}})">Absent</a>
