@@ -7,6 +7,8 @@ from .models import staff
 from .models import attendance
 from .models import amount
 import datetime
+from datetime import timezone, tzinfo
+import datetime
 import collections
 
 def index(request):
@@ -46,7 +48,7 @@ def index(request):
             else :
                 y_n = False
                 print(y_n)
-    
+    # print(datetime.utcnow())
     return render(request, "salary/index.html", {'staff': staffs, 'attendance': attendances, 'amount': amounts, 'date': date, 'unique_dates': unique_dates, 'y_n': y_n, 'unique_dates_reverse': unique_dates_reverse})
 
 
