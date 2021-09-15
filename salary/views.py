@@ -48,7 +48,6 @@ def index(request):
             else :
                 y_n = False
                 print(y_n)
-    # print(datetime.utcnow())
     return render(request, "salary/index.html", {'staff': staffs, 'attendance': attendances, 'amount': amounts, 'date': date, 'unique_dates': unique_dates, 'y_n': y_n, 'unique_dates_reverse': unique_dates_reverse})
 
 
@@ -76,4 +75,38 @@ def user(request):
     staffs = staff.objects.all()
     return render(request, "salary/user.html", {'staff': staffs})
 
+def update(request):
+    staffs = staff.objects.all()
+    attendances = attendance.objects.all()
     
+    if request.method == "POST" :
+        # for i in a :
+        #     print(i)
+        #     stf = 'staff_id' + str(i)
+        #     print(stf)
+        #     atd = 'attendance' + str(i)
+        #     print(atd)
+        #     staff_id = request.POST.get(stf, None)
+        #     attendances = request.POST.get(atd, None)
+
+        #     date = datetime.date.today()
+
+        #     ins = attendance(staff_id=staff_id, attendance=attendances, date=date)
+        #     ins.save()
+        # a_id = attendances.objects.get(id=1)
+        # a_id.update(attendance='absent')
+        # a_id.save()
+
+        # a_id = attendances.objects.filter(id=1).update(attendance='absent')
+        # a_id.save()
+        obj = attendances.objects.get(id=1)
+        obj.attendance = "absent"
+        obj.save()
+        staff_id = 1
+        attendances = 'absent'
+        date = '31-september-2021'
+        insa = attendance(staff_id=staff_id, attendance=attendances, date=date)
+        insa.save()
+        # return HttpResponseRedirect("/update")
+
+    return render(request, "salary/update.html")

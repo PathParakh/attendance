@@ -19,61 +19,31 @@
                                 </thead>
                                 <tbody>
                                     <form action="/index" method="POST">
-                                        {% csrf_token %}
-                                        {% for staffs in staff %}
+                                        {% csrf_token %} {% for staffs in staff %}
                                         <input type="hidden" name="staff_id{{staffs.id}}" value="{{staffs.id}}">
-                                        <input type="hidden" name="attendance{{staffs.id}}"
-                                            id='input_attendance{{staffs.id}}' value="present">
+                                        <input type="hidden" name="attendance{{staffs.id}}" id='input_attendance{{staffs.id}}' value="present">
                                         <tr>
                                             <td> {{staffs.id}} </td>
                                             <td> {{staffs.name}} </td>
                                             <td>
                                                 <div class="btn-group">
-                                                    {% for attendances in attendance %}
-                                                    {% if attendances.staff_id|add:0 == staffs.id|add:0 %}
-                                                    {% if attendances.attendance == 'present'%}
-                                                    {% if attendances.date == date %}
-                                                    <button type="button"
-                                                        class="btn btn-outline-success dropdown-toggle"
-                                                        data-toggle="dropdown" aria-haspopup="true"
-                                                        aria-expanded="false" id='present{{staffs.id}}'>
+                                                    {% for attendances in attendance %} {% if attendances.staff_id|add:0 == staffs.id|add:0 %} {% if attendances.attendance == 'present'%} {% if attendances.date == date %}
+                                                    <button type="button" class="btn btn-outline-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id='present{{staffs.id}}'>
                                                         Present
-                                                    </button>
-                                                    {% endif %}
-                                                    {% elif attendances.attendance == 'absent'%}
-                                                    {% if attendances.date == date %}
-                                                    <button type="button" class="btn btn-outline-danger dropdown-toggle"
-                                                        data-toggle="dropdown" aria-haspopup="true"
-                                                        aria-expanded="false" id='present{{staffs.id}}'>
+                                                    </button> {% endif %} {% elif attendances.attendance == 'absent'%} {% if attendances.date == date %}
+                                                    <button type="button" class="btn btn-outline-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id='present{{staffs.id}}'>
                                                         Absent
-                                                    </button>
-                                                    {% endif %}
-                                                    {% elif attendances.attendance == 'half-day'%}
-                                                    {% if attendances.date == date %}
-                                                    <button type="button"
-                                                        class="btn btn-outline-warning dropdown-toggle"
-                                                        data-toggle="dropdown" aria-haspopup="true"
-                                                        aria-expanded="false" id='present{{staffs.id}}'>
+                                                    </button> {% endif %} {% elif attendances.attendance == 'half-day'%} {% if attendances.date == date %}
+                                                    <button type="button" class="btn btn-outline-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id='present{{staffs.id}}'>
                                                         Half-day
-                                                    </button>
-                                                    {% endif %}
-                                                    {% endif %}
-                                                    {% endif %}
-                                                    {% empty %}
-                                                    <button type="button"
-                                                        class="btn btn-outline-success dropdown-toggle"
-                                                        data-toggle="dropdown" aria-haspopup="true"
-                                                        aria-expanded="false" id='present{{staffs.id}}'>
+                                                    </button> {% endif %} {% endif %} {% endif %} {% empty %}
+                                                    <button type="button" class="btn btn-outline-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id='present{{staffs.id}}'>
                                                         Present
-                                                    </button>
-                                                    {% endfor %}
+                                                    </button> {% endfor %}
                                                     <div class="dropdown-menu">
-                                                        <a class="dropdown-item"
-                                                            onclick="attendance_present({{staffs.id}})">Present</a>
-                                                        <a class="dropdown-item"
-                                                            onclick="attendance_absent({{staffs.id}})">Absent</a>
-                                                        <a class="dropdown-item"
-                                                            onclick="attendance_half_day({{staffs.id}})">Half-day</a>
+                                                        <a class="dropdown-item" onclick="attendance_present({{staffs.id}})">Present</a>
+                                                        <a class="dropdown-item" onclick="attendance_absent({{staffs.id}})">Absent</a>
+                                                        <a class="dropdown-item" onclick="attendance_half_day({{staffs.id}})">Half-day</a>
                                                     </div>
                                                 </div>
                                             </td>
@@ -110,73 +80,40 @@
                                 </thead>
                                 <tbody>
                                     <form action="/index" method="POST">
-                                        {% csrf_token %}
-                                        {% for staffs in staff %}
-                                            <input type="hidden" name="staff_id{{staffs.id}}" value="{{staffs.id}}">
-                                            <input type="hidden" name="attendance{{staffs.id}}"
-                                                id='input_attendance{{staffs.id}}' value="present">
-                                            <tr>
-                                                <td> {{staffs.id}} </td>
-                                                <td> {{staffs.name}} </td>
-                                                <td>
-                                                    <div class="btn-group">
-                                                        {% comment %} {% for attendances in attendance %}
-                                                            {% if attendances.staff_id|add:0 == staffs.id|add:0 %}
-                                                            {% if attendances.attendance == 'present'%}
-                                                            {% if attendances.date == date %}
-                                                            <button type="button"
-                                                                class="btn btn-outline-success dropdown-toggle"
-                                                                data-toggle="dropdown" aria-haspopup="true"
-                                                                aria-expanded="false" id='present{{staffs.id}}'>
-                                                                Present
-                                                            </button>
-                                                            {% endif %}
-                                                            {% elif attendances.attendance == 'absent'%}
-                                                            {% if attendances.date == date %}
-                                                            <button type="button" class="btn btn-outline-danger dropdown-toggle"
-                                                                data-toggle="dropdown" aria-haspopup="true"
-                                                                aria-expanded="false" id='present{{staffs.id}}'>
-                                                                Absent
-                                                            </button>
-                                                            {% endif %}
-                                                            {% elif attendances.attendance == 'half-day'%}
-                                                            {% if attendances.date == date %}
-                                                            <button type="button"
-                                                                class="btn btn-outline-warning dropdown-toggle"
-                                                                data-toggle="dropdown" aria-haspopup="true"
-                                                                aria-expanded="false" id='present{{staffs.id}}'>
-                                                                Half-day
-                                                            </button>
-                                                            {% endif %}
-                                                            {% endif %}
-                                                            {% endif %}
-                                                            {% empty %}
-                                                            <button type="button"
-                                                                class="btn btn-outline-success dropdown-toggle"
-                                                                data-toggle="dropdown" aria-haspopup="true"
-                                                                aria-expanded="false" id='present{{staffs.id}}'>
-                                                                Present
-                                                            </button>
-                                                        {% endfor %} {% endcomment %}
+                                        {% csrf_token %} {% for staffs in staff %}
+                                        <input type="hidden" name="staff_id{{staffs.id}}" value="{{staffs.id}}">
+                                        <input type="hidden" name="attendance{{staffs.id}}" id='input_attendance{{staffs.id}}' value="present">
+                                        <tr>
+                                            <td> {{staffs.id}} </td>
+                                            <td> {{staffs.name}} </td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    {% comment %} {% for attendances in attendance %} {% if attendances.staff_id|add:0 == staffs.id|add:0 %} {% if attendances.attendance == 'present'%} {% if attendances.date == date %}
+                                                    <button type="button" class="btn btn-outline-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id='present{{staffs.id}}'>
+                                                        Present
+                                                    </button> {% endif %} {% elif attendances.attendance == 'absent'%} {% if attendances.date == date %}
+                                                    <button type="button" class="btn btn-outline-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id='present{{staffs.id}}'>
+                                                        Absent
+                                                    </button> {% endif %} {% elif attendances.attendance == 'half-day'%} {% if attendances.date == date %}
+                                                    <button type="button" class="btn btn-outline-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id='present{{staffs.id}}'>
+                                                        Half-day
+                                                    </button> {% endif %} {% endif %} {% endif %} {% empty %}
+                                                    <button type="button" class="btn btn-outline-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id='present{{staffs.id}}'>
+                                                        Present
+                                                    </button> {% endfor %} {% endcomment %}
 
-                                                        <button type="button"
-                                                            class="btn btn-outline-success dropdown-toggle"
-                                                            data-toggle="dropdown" aria-haspopup="true"
-                                                            aria-expanded="false" id='present{{staffs.id}}'>
-                                                            Present
-                                                        </button>
-                                                        <div class="dropdown-menu">
-                                                            <a class="dropdown-item"
-                                                                onclick="attendance_present({{staffs.id}})">Present</a>
-                                                            <a class="dropdown-item"
-                                                                onclick="attendance_absent({{staffs.id}})">Absent</a>
-                                                            <a class="dropdown-item"
-                                                                onclick="attendance_half_day({{staffs.id}})">Half-day</a>
-                                                        </div>
+                                                    <button type="button" class="btn btn-outline-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id='present{{staffs.id}}'>
+                                                        Present
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item" onclick="attendance_present({{staffs.id}})">Present</a>
+                                                        <a class="dropdown-item" onclick="attendance_absent({{staffs.id}})">Absent</a>
+                                                        <a class="dropdown-item" onclick="attendance_half_day({{staffs.id}})">Half-day</a>
                                                     </div>
-                                                </td>
-                                                <td> {{staffs.role}} </td>
-                                            </tr>
+                                                </div>
+                                            </td>
+                                            <td> {{staffs.role}} </td>
+                                        </tr>
 
                                         {% endfor %}
                                         <tr>
@@ -213,11 +150,7 @@
                                     <tr>
                                         <td> {{staffs.id}} </td>
                                         <td> {{staffs.name}} </td>
-                                        {% for unique_date_reverse in unique_dates_reverse%}
-                                        {% for attendances in attendance%}
-                                        {% if attendances.date == unique_date_reverse %}
-                                        {% if attendances.staff_id|add:0 == staffs.id|add:0 %}
-                                        {% if attendances.attendance == 'half-day'%}
+                                        {% for unique_date_reverse in unique_dates_reverse%} {% for attendances in attendance%} {% if attendances.date == unique_date_reverse %} {% if attendances.staff_id|add:0 == staffs.id|add:0 %} {% if attendances.attendance == 'half-day'%}
                                         <td>
                                             <div class="badge badge-outline-warning">Half-day</div>
                                         </td>
@@ -233,11 +166,7 @@
                                         <td>
                                             <div class="badge badge-outline-primary">Not Entered</div>
                                         </td>
-                                        {% endif %}
-                                        {% endif %}
-                                        {% endif %}
-                                        {% endfor %}
-                                        {% endfor %}
+                                        {% endif %} {% endif %} {% endif %} {% endfor %} {% endfor %}
                                     </tr>
                                     {% endfor %}
                                 </tbody>
@@ -247,34 +176,44 @@
                 </div>
             </div>
         </div>
-        {% comment %} <div class="row">
+        {% comment %}
+        <div class="row">
             {% for staffs in staff %}
-                <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="d-flex align-items-center align-self-start" style='float:right'>
-                                        <svg width="16" height="16" fill="currentColor" class="bi bi-pencil-square text-success" viewBox="0 0 16 16">
-                                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-                                        </svg>
-                                    </div>
-                                    <div class="d-flex align-items-center align-self-start">
-                                        <h3 class="mb-0 " style="font-size: 1.3rem">{{staffs.name}}</h3>
-                                    </div>
-                                    <div class="d-flex align-items-center align-self-start">
-                                        <p class="text-success mb-0 font-weight-medium" style='float: right'>{{staffs.number}}</p>
-                                    </div>
+            <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="d-flex align-items-center align-self-start" style='float:right'>
+                                    <svg width="16" height="16" fill="currentColor" class="bi bi-pencil-square text-success" viewBox="0 0 16 16">
+                                        <path
+                                            d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                        <path fill-rule="evenodd"
+                                            d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                    </svg>
+                                </div>
+                                <div class="d-flex align-items-center align-self-start">
+                                    <h3 class="mb-0 " style="font-size: 1.3rem">{{staffs.name}}</h3>
+                                </div>
+                                <div class="d-flex align-items-center align-self-start">
+                                    <p class="text-success mb-0 font-weight-medium" style='float: right'>
+                                        {{staffs.number}}</p>
                                 </div>
                             </div>
-                            <h6 class=" font-weight-normal text-info">{{staffs.role}}</h6>
                         </div>
+                        <h6 class=" font-weight-normal text-info">{{staffs.role}}</h6>
                     </div>
                 </div>
+            </div>
             {% endfor %}
         </div> {% endcomment %}
     </div>
+</div>
+<div class="container">
+    <form method="post" action="/update">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-success">hiajuguaj</button>
+    </form>
 </div>
 <script>
     function attendance_present(id) {
